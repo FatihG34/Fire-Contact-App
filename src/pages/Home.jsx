@@ -22,7 +22,7 @@ const Home = () => {
     }, [])
     console.log(user);
     return (
-        <div className='d-flex mt-1 gap-2 m-1'>
+        <div className='d-flex mt-1 gap-5 m-1'>
             <div className='container bg-info'>
                 <form onSubmit={handleSubmit} className='d-flex flex-column p-2'>
                     <div className="mb-3">
@@ -63,8 +63,8 @@ const Home = () => {
                                     <th scope="row">{item.username}</th>
                                     <td>{item.phone}</td>
                                     <td>{item.gender}</td>
-                                    <td><TiDeleteOutline /></td>
-                                    <td><TiEdit /> </td>
+                                    <td className='text-center'><TiDeleteOutline /></td>
+                                    <td className='text-center'><TiEdit /> </td>
                                 </tr>
                             )
                         })}
