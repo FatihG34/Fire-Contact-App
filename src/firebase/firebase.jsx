@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, child, get, onValue } from "firebase/database";
 
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://firebase.google.com/docs/web/learn-more#config-object
@@ -21,11 +21,35 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 
-function writeUserData(userId, name, email, imageUrl) {
+export function writeUserData(userId, name, phone, gender) {
 
     set(ref(database, 'users/' + userId), {
         username: name,
-        email: email,
-        profile_picture: imageUrl
+        phone: phone,
+        gender: gender
+    });
+};
+
+
+const dbRef = ref(database);
+
+export const getData = (setUser, userId) => {
+    get(child(dbRef, `users/`)).then((snapshot) => {
+        if (snapshot.exists()) {
+            setUser(snapshot.val());
+        } else {
+            alert("No data available");
+        }
+    }).catch((error) => {
+        console.error(error);
     });
 }
+
+// export const getData = (setUser) => {
+//     const userCount = ref(database);
+//     // setUser(userCount)
+//     onValue(userCount, (snapshot) => {
+//         const data = snapshot.val();
+//         setUser(data);
+//     });
+// }
