@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { TiDeleteOutline, TiEdit } from 'react-icons/ti'
-import { writeUserData, getData } from '../firebase/firebase';
+import {
+    // writeUserData, getData, 
+    getUsers, addUser, updateUser, deleteUser
+} from '../firebase/firebase';
 
 const Home = () => {
     const [name, setName] = useState('');
@@ -8,18 +11,24 @@ const Home = () => {
     const [gender, setGender] = useState('');
     const [user, setUser] = useState([])
 
-    let userId = new Date().getTime();
+    // let userId = new Date().getTime();
     const handleSubmit = (e) => {
         e.preventDefault();
-        writeUserData(userId, name, phone, gender)
+        addUser(name, phone, gender)
+        // writeUserData(userId, name, phone, gender)
         setName('');
         setPhone('');
-        setGender('Gender')
+        setGender('Gender');
+        // getUsers(setUser)
         // getData(setUser, userId)
     }
+    const upDateUser = (id) => {
+        updateUser(id, name, phone, gender)
+    }
     useEffect(() => {
-        getData(setUser, userId)
-    }, [])
+        getUsers(setUser)
+        // getData(setUser, userId)
+    }, [phone])
     console.log(user);
     return (
         <div className='d-flex mt-1 gap-5 m-1'>
@@ -55,16 +64,16 @@ const Home = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {[user]?.map((item, index) => {
-                            const { gender, phone, username } = item;
-                            console.log(username);
+                        {user?.map((item, index) => {
+                            const { gender, phone, name } = item;
+                            // console.log(username);
                             return (
                                 <tr key={index}>
-                                    <th scope="row">{item.username}</th>
-                                    <td>{item.phone}</td>
-                                    <td>{item.gender}</td>
-                                    <td className='text-center'><TiDeleteOutline /></td>
-                                    <td className='text-center'><TiEdit /> </td>
+                                    <th scope="row">{name}</th>
+                                    <td>{phone}</td>
+                                    <td>{gender}</td>
+                                    <td className='icon text-center' onClick={() => upDateUser(item.id)}><TiEdit /> </td>
+                                    <td className='icon text-center' onClick={() => deleteUser(item.id)}><TiDeleteOutline /></td>
                                 </tr>
                             )
                         })}

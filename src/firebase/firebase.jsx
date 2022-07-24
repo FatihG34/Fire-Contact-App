@@ -3,13 +3,15 @@ import {
     getDatabase,
     ref,
     set,
-    child,
-    get,
-    onValue,
-    onChildAdded,
-    onChildChanged,
-    onChildRemoved
+    // child,
+    // get,
+    // onValue,
+    // onChildAdded,
+    // onChildChanged,
+    // onChildRemoved
 } from "firebase/database";
+import { getFirestore } from '@firebase/firestore';
+import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from 'firebase/firestore';
 
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://firebase.google.com/docs/web/learn-more#config-object
@@ -26,7 +28,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-
 // Initialize Realtime Database and get a reference to the service
 const database = getDatabase(app);
 
@@ -41,19 +42,19 @@ export function writeUserData(userId, name, phone, gender) {
 };
 
 
-const dbRef = ref(database);
+// const dbRef = ref(database);
 
-export const getData = (setUser, userId) => {
-    get(child(dbRef, `users/`)).then((snapshot) => {
-        if (snapshot.exists()) {
-            setUser(snapshot.val());
-        } else {
-            alert("No data available");
-        }
-    }).catch((error) => {
-        console.error(error);
-    });
-}
+// export const getData = (setUser, userId) => {
+//     get(child(dbRef, `users/`)).then((snapshot) => {
+//         if (snapshot.exists()) {
+//             setUser(snapshot.val());
+//         } else {
+//             alert("No data available");
+//         }
+//     }).catch((error) => {
+//         console.error(error);
+//     });
+// }
 
 // export const getData = (setUser) => {
 //     const userCount = ref(database);
@@ -64,3 +65,26 @@ export const getData = (setUser, userId) => {
 //     });
 // }
 
+
+
+const db = getFirestore(app);
+const useraCollactionRef = collection(db, 'users')
+
+export const getUsers = async (setUser) => {
+    const data = await getDocs(useraCollactionRef);
+    setUser(data.docs.map((item) => ({ ...item.data(), id: item.id })));
+}
+
+export const addUser = async (name, phone, gender) => {
+    const addUsers = await addDoc(useraCollactionRef, { name, phone, gender })
+};
+
+export const deleteUser = async (id) => {
+    const userDoc = doc(db, 'users', id);
+    await deleteDoc(userDoc)
+}
+export const updateUser = async (id, name, phone, gender) => {
+    const userDoc = doc(db, 'users', id)
+    const upDate = { name: name, phone: phone, gender: gender };
+    await updateDoc(userDoc, upDate)
+}
