@@ -31,7 +31,7 @@ const Home = () => {
     }, [phone])
     console.log(user);
     return (
-        <div className='d-flex mt-1 gap-5 m-1'>
+        <div className='d-flex mt-1 gap-4 m-1'>
             <div className='container bg-info'>
                 <form onSubmit={handleSubmit} className='d-flex flex-column p-2'>
                     <div className="mb-3">
