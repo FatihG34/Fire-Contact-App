@@ -2,13 +2,7 @@ import { initializeApp } from "firebase/app";
 import {
     getDatabase,
     ref,
-    set,
-    // child,
-    // get,
-    // onValue,
-    // onChildAdded,
-    // onChildChanged,
-    // onChildRemoved
+    set
 } from "firebase/database";
 import { getFirestore } from '@firebase/firestore';
 import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from 'firebase/firestore';
@@ -40,32 +34,6 @@ export function writeUserData(userId, name, phone, gender) {
         gender: gender
     });
 };
-
-
-// const dbRef = ref(database);
-
-// export const getData = (setUser, userId) => {
-//     get(child(dbRef, `users/`)).then((snapshot) => {
-//         if (snapshot.exists()) {
-//             setUser(snapshot.val());
-//         } else {
-//             alert("No data available");
-//         }
-//     }).catch((error) => {
-//         console.error(error);
-//     });
-// }
-
-// export const getData = (setUser) => {
-//     const userCount = ref(database);
-//     // setUser(userCount)
-//     onValue(userCount, (snapshot) => {
-//         const data = snapshot.val();
-//         setUser(data);
-//     });
-// }
-
-
 
 const db = getFirestore(app);
 const useraCollactionRef = collection(db, 'users')

@@ -11,23 +11,19 @@ const Home = () => {
     const [gender, setGender] = useState('');
     const [user, setUser] = useState([])
 
-    // let userId = new Date().getTime();
+
     const handleSubmit = (e) => {
         e.preventDefault();
         addUser(name, phone, gender)
-        // writeUserData(userId, name, phone, gender)
         setName('');
         setPhone('');
-        setGender('Gender');
-        // getUsers(setUser)
-        // getData(setUser, userId)
+        setGender('Gender')
     }
     const upDateUser = (id) => {
         updateUser(id, name, phone, gender)
     }
     useEffect(() => {
         getUsers(setUser)
-        // getData(setUser, userId)
     }, [phone])
     console.log(user);
     return (
