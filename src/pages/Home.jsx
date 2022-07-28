@@ -94,8 +94,8 @@ const Home = () => {
                             <th scope="col">Username</th>
                             <th scope="col">Phone Number</th>
                             <th scope="col">Gender</th>
-                            <th scope="col">Delete</th>
                             <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
