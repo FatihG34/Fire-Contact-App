@@ -21,22 +21,26 @@ const Home = () => {
         setName('');
         setPhone('');
         setGender('Gender')
+        getUsers(setUser)
     }
     const upDateUser = (itemid) => {
         setEdit(!edit)
         setItemId(itemid)
         inputEdit.current.focus()
-
     }
     const handleSubmitEdit = (e) => {
         e.preventDefault();
         updateUser(itemId, name, phone, gender);
         setEdit(!edit)
+        getUsers(setUser)
     }
-
+    const deleteUserItem = (id) => {
+        deleteUser(id);
+        getUsers(setUser)
+    }
     useEffect(() => {
         getUsers(setUser)
-    }, [phone])
+    }, [])
     console.log(user);
     return (
         <div className='d-flex mt-1 gap-4 m-1'>
@@ -104,7 +108,7 @@ const Home = () => {
                                     <td>{phone}</td>
                                     <td>{gender}</td>
                                     <td className='icon text-center' onClick={() => upDateUser(item.id)}><TiEdit /> </td>
-                                    <td className='icon text-center' onClick={() => deleteUser(item.id)}><TiDeleteOutline /></td>
+                                    <td className='icon text-center' onClick={() => deleteUserItem(item.id)}><TiDeleteOutline /></td>
                                 </tr>
                             )
                         })}
